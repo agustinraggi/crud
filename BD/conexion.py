@@ -65,3 +65,16 @@ class DAO():
                 print("¡Curso eliminado!\n")
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
+
+    # segunda parte 
+    def obtenerTotalVentasAcumulado(self, fecha):
+        if self.conexion.is_connected():
+            try:
+                cursor = self.conexion.cursor()
+                sql = "SELECT SUM(cajaTotal) FROM caja WHERE fecha <= %s"
+                cursor.execute(sql, (fecha,))
+                total = cursor.fetchone()[0]
+                return total
+            except Error as ex:
+                print("Error al ejecutar la consulta:", ex)
+                return None
